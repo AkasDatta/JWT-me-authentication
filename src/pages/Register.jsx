@@ -14,8 +14,26 @@ import {
 
 import { Link as ChakraLink } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router";
+import { useForm } from "react-hook-form";
 
 const Register = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting, errors },
+  } = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+      userName: "",
+      role: "USER",
+    },
+  });
+
+  const onSubmit = (formData) => {
+    console.log("formdata", FormData);
+  };
+
   return (
     <Box
       w={{ base: "90%", md: "400px" }}
@@ -30,7 +48,7 @@ const Register = () => {
       <Heading mb={6} textAlign="center">
         Register
       </Heading>
-      <form>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <VStack spacing={4} align="stretch">
           <FormControl id="username" isRequired>
             <FormLabel>Username</FormLabel>
