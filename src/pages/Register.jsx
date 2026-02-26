@@ -1,7 +1,8 @@
+import { Text } from "@chakra-ui/react";
 import React from "react";
 
 const Register = () => {
-  return <div>register</div>;
+  return <Text color={"white"}>register</Text>;
 };
 
 export default Register;
