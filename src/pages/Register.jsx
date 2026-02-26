@@ -50,17 +50,17 @@ const Register = () => {
       </Heading>
       <form onSubmit={handleSubmit(onSubmit)}>
         <VStack spacing={4} align="stretch">
-          <FormControl id="username" isRequired>
+          <FormControl id="username" isInvalid={errors.username}>
             <FormLabel>Username</FormLabel>
             <Input
               type="text"
               borderColor={"gray.300"}
               placeholder="Enter your username"
-              {...register("userName", { required: "Username is required" })}
+              {...register("username", { required: "Username is required" })}
             />
-            <FormErrorMessage>Username is required.</FormErrorMessage>
+            <FormErrorMessage>{errors.username.message}</FormErrorMessage>
           </FormControl>
-          <FormControl id="email" isRequired>
+          <FormControl id="email" isInvalid={errors.email}>
             <FormLabel>Email</FormLabel>
             <Input
               type="text"
@@ -68,9 +68,9 @@ const Register = () => {
               placeholder="Enter your email"
               {...register("email", { required: "Email is required" })}
             />
-            <FormErrorMessage>Email is required.</FormErrorMessage>
+            <FormErrorMessage>{errors.email.message}</FormErrorMessage>
           </FormControl>
-          <FormControl id="password" isRequired>
+          <FormControl id="password" isInvalid={errors.password}>
             <FormLabel>Password</FormLabel>
             <Input
               type="password"
@@ -78,18 +78,18 @@ const Register = () => {
               placeholder="Enter your password"
               {...register("password", { required: "Password is required" })}
             />
-            <FormErrorMessage>Password is required.</FormErrorMessage>
+            <FormErrorMessage>{errors.password.message}</FormErrorMessage>
           </FormControl>
-          <FormControl id="password" isRequired>
+          <FormControl isInvalid={errors.role}>
             <FormLabel>Role</FormLabel>
             <Select
               color={"gray.400"}
               {...register("role", { required: "Role is required" })}
             >
-              <option value="user">User</option>
-              <option value="admin">Admin</option>
+              <option value="USER">User</option>
+              <option value="ADMIN">Admin</option>
             </Select>
-            <FormErrorMessage>Password is required.</FormErrorMessage>
+            <FormErrorMessage>{errors?.role?.message}</FormErrorMessage>
           </FormControl>
           <Button
             colorScheme="cyan"
