@@ -9,14 +9,19 @@ import {
   Input,
   Select,
   Text,
+  useToast,
   VStack,
 } from "@chakra-ui/react";
 
 import { Link as ChakraLink } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router";
 import { useForm } from "react-hook-form";
+import { useRegister } from "../services/auth/auth";
 
 const Register = () => {
+  // this toast like a alert. i can use sweetalert instead of it
+  const toast = useToast();
+  const { mutateAsync: registerUser } = useRegister();
   const {
     register,
     handleSubmit,
@@ -30,8 +35,26 @@ const Register = () => {
     },
   });
 
-  const onSubmit = (formData) => {
-    console.log("formdata", formData);
+  const onSubmit = async (formData) => {
+    try {
+      await registerUser(formData);
+      toast({
+        title: "Registration successful",
+        description: "You can now log in with your credentials.",
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+      });
+    } catch (error) {
+      console.error("Registration error:", error);
+      toast({
+        title: "Registration Failed",
+        description: error?.response?.data?.message || "Please try again.",
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+      });
+    }
   };
 
   return (
@@ -58,7 +81,7 @@ const Register = () => {
               placeholder="Enter your username"
               {...register("username", { required: "Username is required" })}
             />
-            <FormErrorMessage>{errors.username.message}</FormErrorMessage>
+            <FormErrorMessage>{errors?.username?.message}</FormErrorMessage>
           </FormControl>
           <FormControl id="email" isInvalid={errors.email}>
             <FormLabel>Email</FormLabel>
@@ -68,7 +91,7 @@ const Register = () => {
               placeholder="Enter your email"
               {...register("email", { required: "Email is required" })}
             />
-            <FormErrorMessage>{errors.email.message}</FormErrorMessage>
+            <FormErrorMessage>{errors?.email?.message}</FormErrorMessage>
           </FormControl>
           <FormControl id="password" isInvalid={errors.password}>
             <FormLabel>Password</FormLabel>
@@ -78,7 +101,7 @@ const Register = () => {
               placeholder="Enter your password"
               {...register("password", { required: "Password is required" })}
             />
-            <FormErrorMessage>{errors.password.message}</FormErrorMessage>
+            <FormErrorMessage>{errors?.password?.message}</FormErrorMessage>
           </FormControl>
           <FormControl isInvalid={errors.role}>
             <FormLabel>Role</FormLabel>
