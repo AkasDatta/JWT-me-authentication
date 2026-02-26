@@ -1,7 +1,11 @@
-import {
-  useQuery,
-  useMutation,
-  useQueryClient,
-  QueryClient,
-  QueryClientProvider,
-} from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
+import AxiosInstance from "./AxiosInstance";
+
+export const useRegister = () => {
+  return useMutation({
+    mutationFn: async (data) => {
+      const response = await AxiosInstance.post("users/register", data);
+      return response.data;
+    },
+  });
+};
