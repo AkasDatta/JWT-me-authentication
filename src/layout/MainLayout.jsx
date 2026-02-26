@@ -1,6 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import React from "react";
 import { Outlet } from "react-router";
+import Navbar from "../components/Navbar";
 
 const MainLayout = () => {
   return (
@@ -15,9 +16,7 @@ const MainLayout = () => {
       alignItems="center"
     >
       {/* navbar */}
-      <Box pos={"fixed"} top={0} left={0} w={"100%"} color={"white"}>
-        NavBar
-      </Box>
+      <Navbar></Navbar>
       <Outlet></Outlet>
     </Box>
   );
