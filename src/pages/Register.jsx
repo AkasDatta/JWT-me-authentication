@@ -8,8 +8,12 @@ import {
   Heading,
   Input,
   Select,
+  Text,
   VStack,
 } from "@chakra-ui/react";
+
+import { Link as ChakraLink } from "@chakra-ui/react";
+import { Link as RouterLink } from "react-router";
 
 const Register = () => {
   return (
@@ -63,9 +67,26 @@ const Register = () => {
             </Select>
             <FormErrorMessage>Password is required.</FormErrorMessage>
           </FormControl>
-          <Button colorScheme="blue" w="100%">
+          <Button
+            colorScheme="cyan"
+            color={"black"}
+            type="submit"
+            width={"full"}
+          >
             Register
           </Button>
+          <Text fontSize="sm" color={"gray.600"}>
+            Already have an account?
+            <ChakraLink
+              as={RouterLink}
+              to="/login"
+              color="cyan.400"
+              fontWeight="bold"
+              ml={1}
+            >
+              Login
+            </ChakraLink>
+          </Text>
         </VStack>
       </form>
     </Box>
