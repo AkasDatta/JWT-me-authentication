@@ -31,7 +31,7 @@ const Register = () => {
   });
 
   const onSubmit = (formData) => {
-    console.log("formdata", FormData);
+    console.log("formdata", formData);
   };
 
   return (
@@ -56,6 +56,7 @@ const Register = () => {
               type="text"
               borderColor={"gray.300"}
               placeholder="Enter your username"
+              {...register("userName", { required: "Username is required" })}
             />
             <FormErrorMessage>Username is required.</FormErrorMessage>
           </FormControl>
@@ -65,6 +66,7 @@ const Register = () => {
               type="text"
               borderColor={"gray.300"}
               placeholder="Enter your email"
+              {...register("email", { required: "Email is required" })}
             />
             <FormErrorMessage>Email is required.</FormErrorMessage>
           </FormControl>
@@ -74,12 +76,16 @@ const Register = () => {
               type="password"
               borderColor={"gray.300"}
               placeholder="Enter your password"
+              {...register("password", { required: "Password is required" })}
             />
             <FormErrorMessage>Password is required.</FormErrorMessage>
           </FormControl>
           <FormControl id="password" isRequired>
             <FormLabel>Role</FormLabel>
-            <Select color={"gray.400"}>
+            <Select
+              color={"gray.400"}
+              {...register("role", { required: "Role is required" })}
+            >
               <option value="user">User</option>
               <option value="admin">Admin</option>
             </Select>
