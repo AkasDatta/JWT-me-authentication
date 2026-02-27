@@ -13,8 +13,26 @@ import {
   useToast,
   VStack,
 } from "@chakra-ui/react";
+import { useNavigate } from "react-router";
+import { useForm } from "react-hook-form";
 
 const Login = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting, errors },
+  } = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const onSubmit = async (data) => {
+    console.log("formData", data);
+  };
+
+  const navigate = useNavigate();
   return (
     <Box
       w={{ base: "90%", md: "400px" }}
@@ -29,7 +47,7 @@ const Login = () => {
       <Heading mb={6} textAlign="center">
         Login
       </Heading>
-      <form>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <VStack spacing={4} align="stretch">
           <FormControl id="email" isInvalid={errors.email}>
             <FormLabel>Email</FormLabel>
@@ -59,15 +77,14 @@ const Login = () => {
           >
             Login
           </Button>
-          <ChakraLink
+          <Button
+            variant={"outline"}
             colorScheme="cyan"
-            color={"black"}
-            type="submit"
             width={"full"}
-            to="/login"
+            onClick={() => navigate("/register")}
           >
             Create an account
-          </ChakraLink>
+          </Button>
         </VStack>
       </form>
     </Box>
