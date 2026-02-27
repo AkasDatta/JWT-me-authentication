@@ -9,3 +9,11 @@ export const useRegister = () => {
     },
   });
 };
+export const useLogin = () => {
+  return useMutation({
+    mutationFn: async (data) => {
+      const response = await AxiosInstance.post("users/login", data);
+      return response.data;
+    },
+  });
+};

@@ -15,8 +15,12 @@ import {
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
+import { useLogin } from "../services/auth/auth";
 
 const Login = () => {
+  // this toast like a alert. i can use sweetalert instead of it
+  const toast = useToast();
+  const { mutateAsync: login } = useLogin();
   const {
     register,
     handleSubmit,
@@ -29,7 +33,26 @@ const Login = () => {
   });
 
   const onSubmit = async (data) => {
-    console.log("formData", data);
+    console.log("formData:", data);
+    try {
+      await login(data);
+      toast({
+        title: "Registration successful",
+        description: "You can now log in with your credentials.",
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+      });
+    } catch (errors) {
+      console.error("Registration error:", errors);
+      toast({
+        title: "Registration Failed",
+        description: errors?.response?.data?.message || "Please try again.",
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+      });
+    }
   };
 
   const navigate = useNavigate();
