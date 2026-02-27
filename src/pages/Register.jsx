@@ -45,11 +45,11 @@ const Register = () => {
         duration: 2000,
         isClosable: true,
       });
-    } catch (error) {
-      console.error("Registration error:", error);
+    } catch (errors) {
+      console.error("Registration error:", errors);
       toast({
         title: "Registration Failed",
-        description: error?.response?.data?.message || "Please try again.",
+        description: errors?.response?.data?.message || "Please try again.",
         status: "error",
         duration: 2000,
         isClosable: true,
