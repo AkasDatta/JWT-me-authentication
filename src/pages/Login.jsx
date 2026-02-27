@@ -36,17 +36,18 @@ const Login = () => {
     console.log("formData:", data);
     try {
       await login(data);
+      navigate("/product");
       toast({
-        title: "Registration successful",
-        description: "You can now log in with your credentials.",
+        title: "Login successful",
+        description: "You are now logged in.",
         status: "success",
         duration: 2000,
         isClosable: true,
       });
     } catch (errors) {
-      console.error("Registration error:", errors);
+      console.error("Login error:", errors);
       toast({
-        title: "Registration Failed",
+        title: "Login Failed",
         description: errors?.response?.data?.message || "Please try again.",
         status: "error",
         duration: 2000,

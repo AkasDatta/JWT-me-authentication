@@ -3,6 +3,7 @@ import Register from "../pages/register";
 import MainLayout from "../layout/MainLayout";
 import { Text } from "@chakra-ui/react";
 import Login from "../pages/Login";
+import Product from "../pages/Product";
 
 export const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ export const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login />,
+      },
+      {
+        path: "/product",
+        element: <Product />,
       },
     ],
   },
