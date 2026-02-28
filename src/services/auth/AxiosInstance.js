@@ -1,10 +1,62 @@
 import axios from "axios";
 
-const AxiosInstance = axios.create({
+export const AxiosInstance = axios.create({
   baseURL: "https://api.freeapi.app/api/v1/",
-  HEADERS: {
+  headers: {
     "Content-Type": "application/json",
   },
 });
 
-export default AxiosInstance;
+// request interceptor to add access token
+AxiosInstance.interceptors.request.use(
+  () => {
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      AxiosInstance.defaults.headers.common["Authorization"] =
+        `Bearer ${token}`;
+    }
+  },
+  (error) => Promise.reject(error),
+);
+
+// response interceptor to handle token refresh
+AxiosInstance.interceptors.response.use(
+  (response) => {
+    response;
+  },
+  async (error) => {
+    const originalRequest = error.config;
+    // if 401 error and not already retired
+    if (
+      error.response &&
+      error.response.status === 401 &&
+      !originalRequest._retry
+    ) {
+      originalRequest._retry = true;
+
+      // attempt to refresh token
+      try {
+        // request new access token
+        const refreshToken = localStorage.getItem("refreshToken");
+        const res = await axios.post(
+          "https://api.freeapi.app/api/v1/users/refresh-token",
+          { refreshToken },
+        );
+
+        const { accessToken } = res.data;
+
+        // update local storage and axios headers
+        localStorage.setItem("accessToken", accessToken);
+        AxiosInstance.defaults.headers.common["Authorization"] =
+          `Bearer ${accessToken}`;
+      } catch (error) {
+        window.location.href = "/login";
+
+        // clear tokens on failure
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        return Promise.reject(error);
+      }
+    }
+  },
+);
