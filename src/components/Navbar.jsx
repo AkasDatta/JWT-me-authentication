@@ -6,13 +6,29 @@ import {
   Button,
   HStack,
   Container,
-  Badge,
   Text,
 } from "@chakra-ui/react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import Logo from "../assets/ecommerce-logo.svg";
+import { useAuthStore } from "../store/authStore";
+import AxiosInstance from "../services/auth/AxiosInstance";
 
 const Navbar = () => {
+  const accessToken = useAuthStore();
+  const navigate = useNavigate();
+
+  const logout = async () => {
+    try {
+      await AxiosInstance.post("users/logout");
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+    } catch (error) {
+      console.error("Logout error:", error);
+    } finally {
+      navigate("/login");
+    }
+  };
+
   return (
     <Box
       boxShadow="0 4px 10px rgba(0, 0, 0, 0.2)" // black shadow with opacity
@@ -70,24 +86,38 @@ const Navbar = () => {
             spacing={{ base: 2, md: 4 }}
             mt={{ base: 2, md: 0 }}
           >
-            <Link to="/login">
-              <Button
-                colorScheme="cyan"
-                color="black"
-                size={{ base: "sm", md: "md" }}
-              >
-                Login
-              </Button>
-            </Link>
-            <Link to="/register">
-              <Button
-                variant="outline"
-                colorScheme="cyan"
-                size={{ base: "sm", md: "md" }}
-              >
-                Register
-              </Button>
-            </Link>
+            {!accessToken ? (
+              <>
+                <Link to="/login">
+                  <Button
+                    colorScheme="cyan"
+                    color="black"
+                    size={{ base: "sm", md: "md" }}
+                  >
+                    Login
+                  </Button>
+                </Link>
+                <Link to="/register">
+                  <Button
+                    variant="outline"
+                    colorScheme="cyan"
+                    size={{ base: "sm", md: "md" }}
+                  >
+                    Register
+                  </Button>
+                </Link>
+              </>
+            ) : (
+              <Link to="/logout">
+                <Button
+                  colorScheme="red"
+                  size={{ base: "sm", md: "md" }}
+                  onClick={logout}
+                >
+                  Logout
+                </Button>
+              </Link>
+            )}
           </HStack>
         </Flex>
       </Container>
