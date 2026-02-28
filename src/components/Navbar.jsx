@@ -6,14 +6,15 @@ import {
   Button,
   HStack,
   Container,
+  Badge,
   Text,
 } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router";
+import { useAuthStore } from "./../store/authStore";
+import { AxiosInstance } from "./../services/auth/AxiosInstance";
 import Logo from "../assets/ecommerce-logo.svg";
-import { useAuthStore } from "../store/authStore";
-import AxiosInstance from "../services/auth/AxiosInstance";
 
-const Navbar = () => {
+export const Navbar = () => {
   const { accessToken, clearTokens } = useAuthStore();
   const navigate = useNavigate();
 
@@ -23,7 +24,7 @@ const Navbar = () => {
       clearTokens();
       navigate("/login");
     } catch (error) {
-      console.error("Logout error:", error);
+      console.error("Logout failed:", error);
     }
   };
 
@@ -106,15 +107,14 @@ const Navbar = () => {
                 </Link>
               </>
             ) : (
-              <Link to="/logout">
-                <Button
-                  colorScheme="red"
-                  size={{ base: "sm", md: "md" }}
-                  onClick={logout}
-                >
-                  Logout
-                </Button>
-              </Link>
+              <Button
+                colorScheme="cyan"
+                color="black"
+                size={{ base: "sm", md: "md" }}
+                onClick={logout}
+              >
+                Logout
+              </Button>
             )}
           </HStack>
         </Flex>
@@ -122,5 +122,3 @@ const Navbar = () => {
     </Box>
   );
 };
-
-export default Navbar;

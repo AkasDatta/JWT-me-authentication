@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import AxiosInstance from "./AxiosInstance";
+import { AxiosInstance } from "./AxiosInstance";
 
 export const useRegister = () => {
   return useMutation({
