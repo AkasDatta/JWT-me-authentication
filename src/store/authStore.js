@@ -9,4 +9,10 @@ export const useAuthStore = create((set) => ({
     if (refreshToken) localStorage.setItem("refreshToken", refreshToken);
     set({ accessToken, refreshToken });
   },
+
+  clearTokens: () => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    set({ accessToken: null, refreshToken: null });
+  },
 }));

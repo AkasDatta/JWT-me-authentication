@@ -14,18 +14,16 @@ import { useAuthStore } from "../store/authStore";
 import AxiosInstance from "../services/auth/AxiosInstance";
 
 const Navbar = () => {
-  const accessToken = useAuthStore();
+  const { accessToken, clearTokens } = useAuthStore();
   const navigate = useNavigate();
 
   const logout = async () => {
     try {
       await AxiosInstance.post("users/logout");
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("refreshToken");
+      clearTokens();
+      navigate("/login");
     } catch (error) {
       console.error("Logout error:", error);
-    } finally {
-      navigate("/login");
     }
   };
 
