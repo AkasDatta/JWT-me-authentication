@@ -9,12 +9,13 @@ export const AxiosInstance = axios.create({
 
 // request interceptor to add access token
 AxiosInstance.interceptors.request.use(
-  () => {
+  (config) => {
     const token = localStorage.getItem("accessToken");
     if (token) {
       AxiosInstance.defaults.headers.common["Authorization"] =
         `Bearer ${token}`;
     }
+    return config;
   },
   (error) => Promise.reject(error),
 );
@@ -43,12 +44,14 @@ AxiosInstance.interceptors.response.use(
           { refreshToken },
         );
 
-        const { accessToken } = res.data;
+        const { accessToken } = res.data.data;
 
         // update local storage and axios headers
         localStorage.setItem("accessToken", accessToken);
-        AxiosInstance.defaults.headers.common["Authorization"] =
-          `Bearer ${accessToken}`;
+        originalRequest.headers["Authorization"] = `Bearer ${accessToken}`;
+
+        // send original request again
+        return AxiosInstance(originalRequest);
       } catch (error) {
         window.location.href = "/login";
 
@@ -58,5 +61,6 @@ AxiosInstance.interceptors.response.use(
         return Promise.reject(error);
       }
     }
+    return Promise.reject(error);
   },
 );
