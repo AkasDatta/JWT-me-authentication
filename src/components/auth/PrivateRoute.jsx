@@ -21,6 +21,12 @@ const PrivateRoute = ({ children }) => {
       onOpen();
     }
   });
+
+  const handleClose = () => {
+    onClose();
+    window.location.href = "/login";
+  };
+
   if (accessToken) {
     return children;
   } else {
@@ -31,19 +37,17 @@ const PrivateRoute = ({ children }) => {
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <ModalContent>
-            <ModalHeader>Modal Title</ModalHeader>
+            <ModalHeader>Authentication required</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Expedita
-              unde doloribus blanditiis quam omnis. Est necessitatibus velit
-              deleniti enim quo.
+              You must be logged in to access this page. Please log in to
+              continue.
             </ModalBody>
 
             <ModalFooter>
-              <Button colorScheme="blue" mr={3} onClick={onClose}>
-                Close
+              <Button colorScheme="blue" mr={3} onClick={handleClose}>
+                Go to Login
               </Button>
-              <Button variant="ghost">Secondary Action</Button>
             </ModalFooter>
           </ModalContent>
         </Modal>
