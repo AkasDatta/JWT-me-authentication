@@ -8,6 +8,7 @@ import PrivateRoute from "../components/auth/PrivateRoute";
 import Dashboard from "../components/dashboard/Dashboard";
 import RoleBasedPrivateRoute from "../components/auth/RoleBasedPrivateRoute";
 import Home from "../pages/Home";
+import Unauthorized from "../pages/Unauthorized";
 
 export const router = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ export const router = createBrowserRouter([
             <Dashboard />
           </RoleBasedPrivateRoute>
         ),
+      },
+      {
+        path: "/unauthorized",
+        element: <Unauthorized></Unauthorized>,
       },
     ],
   },
