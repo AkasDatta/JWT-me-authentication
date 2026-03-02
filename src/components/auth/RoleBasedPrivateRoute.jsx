@@ -10,9 +10,10 @@ import {
   ModalCloseButton,
   useDisclosure,
   Button,
+  Text,
 } from "@chakra-ui/react";
 
-const RoleBasedPrivateRoute = ({ children }) => {
+const RoleBasedPrivateRoute = ({ children, allowedRole = [] }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { accessToken, userRole } = useAuthStore();
 
