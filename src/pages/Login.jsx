@@ -39,9 +39,11 @@ const Login = () => {
     try {
       const response = await login(data);
       const { accessToken, refreshToken } = response.data;
+      const userRole = response.data.user?.role || "admin"; // Default to "admin" if role is not provided
       setTokens({
         accessToken,
         refreshToken,
+        userRole,
       });
 
       navigate("/product");
