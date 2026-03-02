@@ -5,6 +5,7 @@ import { Text } from "@chakra-ui/react";
 import Login from "../pages/Login";
 import Product from "../pages/Product";
 import PrivateRoute from "../components/auth/PrivateRoute";
+import Dashboard from "../components/dashboard/Dashboard";
 
 export const router = createBrowserRouter([
   {
@@ -28,6 +29,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <Product />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard",
+        element: (
+          <PrivateRoute>
+            <Dashboard />
           </PrivateRoute>
         ),
       },
