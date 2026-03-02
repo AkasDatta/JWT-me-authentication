@@ -6,6 +6,7 @@ import Login from "../pages/Login";
 import Product from "../pages/Product";
 import PrivateRoute from "../components/auth/PrivateRoute";
 import Dashboard from "../components/dashboard/Dashboard";
+import RoleBasedPrivateRoute from "../components/auth/RoleBasedPrivateRoute";
 
 export const router = createBrowserRouter([
   {
@@ -35,9 +36,9 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard",
         element: (
-          <PrivateRoute>
+          <RoleBasedPrivateRoute allowedRole={["ADMIN"]}>
             <Dashboard />
-          </PrivateRoute>
+          </RoleBasedPrivateRoute>
         ),
       },
     ],

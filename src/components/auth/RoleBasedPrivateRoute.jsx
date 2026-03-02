@@ -42,8 +42,16 @@ const RoleBasedPrivateRoute = ({ children }) => {
             <ModalHeader>Access Denied</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
-              You must be logged in to access this page. Please log in to
-              continue.
+              {!accessToken ? (
+                <Text>
+                  You must be logged in to access this page. Please log in to
+                  continue.
+                </Text>
+              ) : (
+                <Text>
+                  You do not have the necessary permissions to access this page.
+                </Text>
+              )}
             </ModalBody>
 
             <ModalFooter>
