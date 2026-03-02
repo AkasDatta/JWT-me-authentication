@@ -23,11 +23,15 @@ const RoleBasedPrivateRoute = ({ children, allowedRole = [] }) => {
     } else if (accessToken && !allowedRole.includes(userRole)) {
       onOpen();
     }
-  });
+  }, [accessToken, userRole, allowedRole, onOpen]);
 
   const handleClose = () => {
     onClose();
-    window.location.href = "/login";
+    if (!accessToken) {
+      window.location.href = "/login";
+    } else {
+      window.location.href = "/unauthorized";
+    }
   };
 
   if (accessToken && allowedRole.includes(userRole)) {
