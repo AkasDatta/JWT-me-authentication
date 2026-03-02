@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useAuthStore } from "../../store/authStore";
 import {
   Modal,
@@ -15,6 +15,12 @@ import {
 const PrivateRoute = ({ children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { accessToken } = useAuthStore();
+
+  useEffect(() => {
+    if (!accessToken) {
+      onOpen();
+    }
+  });
   if (accessToken) {
     return children;
   } else {
