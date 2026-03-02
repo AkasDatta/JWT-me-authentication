@@ -4,6 +4,7 @@ import MainLayout from "../layout/MainLayout";
 import { Text } from "@chakra-ui/react";
 import Login from "../pages/Login";
 import Product from "../pages/Product";
+import PrivateRoute from "../components/auth/PrivateRoute";
 
 export const router = createBrowserRouter([
   {
@@ -24,7 +25,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/product",
-        element: <Product />,
+        element: (
+          <PrivateRoute>
+            <Product />
+          </PrivateRoute>
+        ),
       },
     ],
   },
