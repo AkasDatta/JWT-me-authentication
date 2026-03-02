@@ -7,6 +7,7 @@ import Product from "../pages/Product";
 import PrivateRoute from "../components/auth/PrivateRoute";
 import Dashboard from "../components/dashboard/Dashboard";
 import RoleBasedPrivateRoute from "../components/auth/RoleBasedPrivateRoute";
+import Home from "../pages/Home";
 
 export const router = createBrowserRouter([
   {
@@ -15,7 +16,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Text color={"white"}>Hello world!</Text>,
+        element: <Home />,
       },
       {
         path: "/register",
