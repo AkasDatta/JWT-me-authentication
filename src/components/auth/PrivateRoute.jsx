@@ -20,7 +20,7 @@ const PrivateRoute = ({ children }) => {
     if (!accessToken) {
       onOpen();
     }
-  });
+  }); 
 
   const handleClose = () => {
     onClose();
